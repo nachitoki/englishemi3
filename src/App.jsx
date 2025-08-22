@@ -320,13 +320,13 @@ function SectionCard({ icon: Icon, title, children, actions }) {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow p-5 border border-gray-100"
+      className="bg-white rounded-2xl shadow p-4 sm:p-5 border border-gray-100"
     >
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold flex items-center gap-2">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h3 className="text-lg font-semibold flex items-center gap-2 flex-wrap">
           {Icon && <Icon className="w-5 h-5" />} {title}
         </h3>
-        <div className="flex gap-2">{actions}</div>
+        <div className="flex gap-2 w-full sm:w-auto">{actions}</div>
       </div>
       <div className="mt-4">{children}</div>
     </motion.div>
@@ -335,7 +335,7 @@ function SectionCard({ icon: Icon, title, children, actions }) {
 
 function Header() {
   return (
-    <header className="mx-auto max-w-6xl px-4 pt-6 pb-3">
+    <header className="mx-auto max-w-6xl px-3 sm:px-4 pt-6 pb-3">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">English Study – 7° Básico</h1>
@@ -343,7 +343,7 @@ function Header() {
             Basado en el temario oficial. Practica vocabulario, lectura y escritura. Guarda tu avance.
           </p>
         </div>
-        <div className="text-right text-xs text-gray-500">
+        <div className="text-right text-xs text-gray-500 hidden sm:block">
           <p>Pro tip: usa “Imprimir” del navegador para fichas/guías.</p>
         </div>
       </div>
@@ -353,13 +353,13 @@ function Header() {
 
 function Tabs({ value, onChange, items }) {
   return (
-    <div className="mx-auto max-w-6xl px-4">
-      <div className="flex gap-2 bg-white rounded-xl p-1 shadow border border-gray-100">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4">
+      <div className="flex gap-2 bg-white rounded-xl p-1 shadow border border-gray-100 overflow-x-auto whitespace-nowrap scrollbar-none">
         {items.map((it) => (
           <button
             key={it.value}
             onClick={() => onChange(it.value)}
-            className={`px-4 py-2 rounded-lg transition text-sm font-medium ${
+            className={`px-4 py-2 rounded-lg transition text-sm font-medium flex-shrink-0 ${
               value === it.value ? "bg-sky-600 text-white" : "text-gray-700 hover:bg-gray-100"
             }`}
           >
@@ -375,10 +375,10 @@ function Tabs({ value, onChange, items }) {
 
 function SyllabusView() {
   return (
-    <div className="mx-auto max-w-6xl px-4 grid md:grid-cols-2 gap-4 mt-4">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4 grid md:grid-cols-2 gap-4 mt-4">
       {SYLLABUS.objectives.map((oa) => (
         <SectionCard key={oa.id} icon={BookOpen} title={`${oa.title}`}>
-          <p className="text-gray-700 mb-3">{oa.desc}</p>
+          <p className="text-gray-700 mb-3 text-sm sm:text-base">{oa.desc}</p>
           <div className="flex flex-wrap">
             {oa.indicators.map((ind, idx) => (
               <Pill key={idx}>{ind}</Pill>
@@ -433,7 +433,7 @@ function Flashcards() {
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <label className="text-sm">Lista:</label>
         <select
-          className="border rounded-lg px-3 py-2 text-sm"
+          className="border rounded-lg px-3 py-2 text-sm w-full sm:w-auto"
           value={deckId}
           onChange={(e) => setDeckId(e.target.value)}
         >
@@ -445,7 +445,7 @@ function Flashcards() {
         </select>
         <button
           onClick={() => setIdx(Math.floor(Math.random() * deck.cards.length))}
-          className="px-3 py-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200"
+          className="px-3 py-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 w-full sm:w-auto"
         >
           Aleatorio
         </button>
@@ -455,7 +455,7 @@ function Flashcards() {
           initial={false}
           animate={{ rotateY: flipped ? 180 : 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full max-w-md h-48 perspective"
+          className="w-full max-w-md h-64 sm:h-48 perspective"
           onClick={() => setFlipped((f) => !f)}
         >
           <div className={`relative w-full h-full text-center cursor-pointer`}>
@@ -473,8 +473,8 @@ function Flashcards() {
             </div>
           </div>
         </motion.div>
-        <div className="mt-4 flex gap-2">
-          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white" onClick={next}>
+        <div className="mt-4 flex gap-2 w-full">
+          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white w-full sm:w-auto" onClick={next}>
             Siguiente
           </button>
         </div>
@@ -507,7 +507,7 @@ function VocabQuiz({ onFinish }) {
 
   return (
     <SectionCard icon={Trophy} title="Quiz de vocabulario (8 preguntas)" actions={[
-      <button key="regen" className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2" onClick={() => { setQuestions(buildQuestions()); setAnswers({}); setSubmitted(false); }}>
+      <button key="regen" className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2 w-full sm:w-auto" onClick={() => { setQuestions(buildQuestions()); setAnswers({}); setSubmitted(false); }}>
         <RotateCcw className="w-4 h-4"/> Nuevo
       </button>
     ]}>
@@ -517,7 +517,7 @@ function VocabQuiz({ onFinish }) {
             <p className="text-sm text-gray-700 mb-2">
               <span className="font-medium">P{i + 1}.</span> {q.hint}
             </p>
-            <div className="grid sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {q.opts.map((opt, j) => {
                 const selected = answers[i] === j;
                 const isCorrect = submitted && j === q.correct;
@@ -526,7 +526,7 @@ function VocabQuiz({ onFinish }) {
                   <button
                     key={j}
                     onClick={() => !submitted && setAnswers({ ...answers, [i]: j })}
-                    className={`px-3 py-2 rounded-lg border text-left ${
+                    className={`px-3 py-2 rounded-lg border text-left w-full ${
                       selected ? "border-sky-600" : "border-gray-200"
                     } ${submitted && isCorrect ? "bg-green-50" : ""} ${submitted && isWrong ? "bg-red-50" : ""}`}
                   >
@@ -538,11 +538,11 @@ function VocabQuiz({ onFinish }) {
           </li>
         ))}
       </ol>
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         {!submitted ? (
           <button
             onClick={() => setSubmitted(true)}
-            className="px-4 py-2 rounded-lg bg-sky-600 text-white"
+            className="px-4 py-2 rounded-lg bg-sky-600 text-white w-full sm:w-auto"
           >
             Enviar
           </button>
@@ -557,12 +557,12 @@ function VocabQuiz({ onFinish }) {
                 setAnswers({});
                 setSubmitted(false);
               }}
-              className="px-3 py-2 rounded-lg bg-gray-100"
+              className="px-3 py-2 rounded-lg bg-gray-100 w-full sm:w-auto"
             >
               Repetir
             </button>
             {onFinish && (
-              <button onClick={() => onFinish(score, questions.length)} className="px-3 py-2 rounded-lg bg-emerald-600 text-white">
+              <button onClick={() => onFinish(score, questions.length)} className="px-3 py-2 rounded-lg bg-emerald-600 text-white w-full sm:w-auto">
                 Guardar avance
               </button>
             )}
@@ -587,7 +587,7 @@ function ReadingComp() {
     <SectionCard icon={BookOpen} title="Comprensión lectora (OA9–OA10)">
       <div className="flex flex-wrap items-center gap-2 mb-3">
         <label className="text-sm">Texto:</label>
-        <select className="border rounded-lg px-3 py-2 text-sm" value={p.id} onChange={(e) => {
+        <select className="border rounded-lg px-3 py-2 text-sm w-full sm:w-auto" value={p.id} onChange={(e) => {
           const next = READING_PASSAGES.find((x) => x.id === Number(e.target.value));
           setP(next || READING_PASSAGES[0]);
           setAnswers({});
@@ -598,7 +598,7 @@ function ReadingComp() {
           ))}
         </select>
       </div>
-      <article className="bg-gray-50 rounded-xl p-4 leading-relaxed mb-4">
+      <article className="bg-gray-50 rounded-xl p-4 leading-relaxed mb-4 text-sm sm:text-base">
         {p.text}
       </article>
       <ol className="space-y-3">
@@ -607,7 +607,7 @@ function ReadingComp() {
             <p className="text-sm text-gray-700 mb-2">
               <span className="font-medium">P{i + 1}.</span> {q.q}
             </p>
-            <div className="grid sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {q.options.map((opt, j) => {
                 const selected = answers[i] === j;
                 const isCorrect = submitted && j === q.a;
@@ -616,7 +616,7 @@ function ReadingComp() {
                   <button
                     key={j}
                     onClick={() => !submitted && setAnswers({ ...answers, [i]: j })}
-                    className={`px-3 py-2 rounded-lg border text-left ${
+                    className={`px-3 py-2 rounded-lg border text-left w-full ${
                       selected ? "border-sky-600" : "border-gray-200"
                     } ${submitted && isCorrect ? "bg-green-50" : ""} ${submitted && isWrong ? "bg-red-50" : ""}`}
                   >
@@ -630,7 +630,7 @@ function ReadingComp() {
       </ol>
       <div className="mt-4 flex items-center gap-3">
         {!submitted ? (
-          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white" onClick={() => setSubmitted(true)}>
+          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white w-full sm:w-auto" onClick={() => setSubmitted(true)}>
             Enviar
           </button>
         ) : (
@@ -647,7 +647,7 @@ function WritingPrompts() {
   const PROMPTS = [
     { id: 1, text: "Write about a personal experience where you helped the environment. Use first/next/finally and at least 80 words.", oa: "OA13, OA16 (conectores, pasado)" },
     { id: 2, text: "Describe your favorite sport or hobby. Include equipment, place, and how often you practice.", oa: "OA16 (rutinas, deportes, frecuencia)" },
-    { id: 3, text: "Give advice to a friend who feels nervous before a test. Use expressions (give advice, I\'m sorry to hear that, see you soon).", oa: "OA16 (expresiones comunes)" },
+    { id: 3, text: "Give advice to a friend who feels nervous before a test. Use expressions (give advice, I\\'m sorry to hear that, see you soon).", oa: "OA16 (expresiones comunes)" },
     { id: 4, text: "Explain a simple cause-and-effect situation (e.g., If you heat ice cream, it melts). Give two more examples.", oa: "OA16 (if, causa-efecto)" },
   ];
 
@@ -658,13 +658,13 @@ function WritingPrompts() {
 
   return (
     <SectionCard icon={PenLine} title="Escritura guiada (OA13–OA16)" actions={[
-      <button key="print" onClick={() => window.print()} className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2">
+      <button key="print" onClick={() => window.print()} className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2 w-full sm:w-auto">
         <FileDown className="w-4 h-4"/> Imprimir hoja
       </button>
     ]}>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <label className="text-sm">Indicación:</label>
-        <select className="border rounded-lg px-3 py-2 text-sm" value={sel.id} onChange={(e) => setSel(PROMPTS.find(p => p.id === Number(e.target.value)) || PROMPTS[0])}>
+        <select className="border rounded-lg px-3 py-2 text-sm w-full sm:w-auto" value={sel.id} onChange={(e) => setSel(PROMPTS.find(p => p.id === Number(e.target.value)) || PROMPTS[0])}>
           {PROMPTS.map((p) => (
             <option key={p.id} value={p.id}>{p.text.slice(0, 50)}…</option>
           ))}
@@ -673,7 +673,7 @@ function WritingPrompts() {
       </div>
       <div className="bg-gray-50 rounded-xl p-3 text-sm mb-2">{sel.text}</div>
       <textarea
-        className="w-full min-h-[180px] border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-sky-300"
+        className="w-full min-h-[180px] border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-sky-300 text-sm sm:text-base"
         placeholder="Escribe tu texto aquí…"
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -726,7 +726,7 @@ function SessionPlanner({ onComplete }) {
     <SectionCard icon={Timer} title="Sesión de estudio (Pomodoro)">
       <div className="flex flex-wrap gap-2 mb-3">
         {presets.map((p) => (
-          <button key={p.label} className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm" onClick={() => { setMinutes(p.m); setSeconds(0); }}>
+          <button key={p.label} className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm w-full sm:w-auto" onClick={() => { setMinutes(p.m); setSeconds(0); }}>
             {p.label}
           </button>
         ))}
@@ -734,17 +734,17 @@ function SessionPlanner({ onComplete }) {
       <div className="text-5xl font-bold tracking-widest text-center my-4">
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </div>
-      <div className="flex justify-center gap-2">
+      <div className="flex justify-center gap-2 flex-wrap">
         {!running ? (
-          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white" onClick={() => setRunning(true)}>
+          <button className="px-4 py-2 rounded-lg bg-sky-600 text-white w-full sm:w-auto" onClick={() => setRunning(true)}>
             Iniciar
           </button>
         ) : (
-          <button className="px-4 py-2 rounded-lg bg-rose-600 text-white" onClick={() => setRunning(false)}>
+          <button className="px-4 py-2 rounded-lg bg-rose-600 text-white w-full sm:w-auto" onClick={() => setRunning(false)}>
             Pausar
           </button>
         )}
-        <button className="px-4 py-2 rounded-lg bg-gray-100" onClick={reset}>Reiniciar</button>
+        <button className="px-4 py-2 rounded-lg bg-gray-100 w-full sm:w-auto" onClick={reset}>Reiniciar</button>
       </div>
     </SectionCard>
   );
@@ -756,7 +756,7 @@ function ProgressView({ progress }) {
   const lastScore = progress.lastVocabScore || 0;
   return (
     <SectionCard icon={Trophy} title="Progreso">
-      <div className="grid sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="bg-white border rounded-xl p-4 text-center">
           <div className="text-3xl font-bold">{sessions}</div>
           <div className="text-sm text-gray-600">Sesiones completadas</div>
@@ -776,7 +776,7 @@ function ProgressView({ progress }) {
 
 function PracticeHub({ onSaveProgress }) {
   return (
-    <div className="mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-4 mt-4">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4 grid md:grid-cols-2 gap-4 mt-4">
       <Flashcards />
       <VocabQuiz onFinish={(score, total) => onSaveProgress({ lastVocabScore: `${score}/${total}`, bestVocab: score })} />
       <ReadingComp />
@@ -815,23 +815,25 @@ export default function App() {
       {tab === "syllabus" && <SyllabusView />}
       {tab === "practice" && <PracticeHub onSaveProgress={saveProgress} />}
       {tab === "sessions" && (
-        <div className="mx-auto max-w-6xl px-4 mt-4">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4 mt-4">
           <SessionPlanner onComplete={() => setProgress((p) => ({ ...p, sessions: (p.sessions || 0) + 1 }))} />
         </div>
       )}
       {tab === "progress" && (
-        <div className="mx-auto max-w-6xl px-4 mt-4">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4 mt-4">
           <ProgressView progress={progress} />
         </div>
       )}
 
-      <footer className="mx-auto max-w-6xl px-4 py-10 text-center text-xs text-gray-500">
+      <footer className="mx-auto max-w-6xl px-3 sm:px-4 py-10 text-center text-xs text-gray-500">
         Hecho para estudiar desde el temario de 7° básico. Guarda en el navegador; no requiere internet.
       </footer>
 
       <style>{`
         .perspective { perspective: 1000px; }
         .backface-hidden { backface-visibility: hidden; }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );
